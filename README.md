@@ -2,6 +2,30 @@
 
 An Arduino terminal app for Zed. Created by Bartosz Wiaderek. Built with Go, Bubble Tea, and Arduino CLI.
 
+## Installation
+
+The installer supports macOS and Linux. You need Git, Go 1.26 or newer, and Arduino CLI available on PATH. On macOS with Homebrew, install the build and runtime dependencies with `brew install go arduino-cli`. See the [Go formula](https://formulae.brew.sh/formula/go) and [Arduino CLI formula](https://formulae.brew.sh/formula/arduino-cli).
+
+Download and install Baobab with one command:
+
+```sh
+git clone https://github.com/WiaderekB/Baobab.git && cd Baobab && ./install.sh
+```
+
+If you already have the repository, run `./install.sh` from its directory.
+
+The installer builds `bao` in the repository and creates a symlink at `~/.local/bin/bao`. Keep the repository in place so the link continues to work. If `~/.local/bin` is missing from PATH, the installer prints the line to add to your shell configuration, such as `~/.zshrc` on macOS. Open a new terminal after adding it.
+
+Verify the installation with `bao --version`, then run `bao` from your Arduino workspace.
+
+To update an existing installation, run this from the repository:
+
+```sh
+git pull --ff-only && ./install.sh
+```
+
+Set `BAOBAB_BIN_DIR` to choose another command directory, for example `BAOBAB_BIN_DIR="$HOME/bin" ./install.sh`.
+
 ## Quick start
 
 1. In Zed, run **task: spawn → Baobab: Open Arduino menu**. The task saves files and selects the sketch containing the active file. You can also run `bao` from a workspace or pass a path, such as `bao "W02/Display/Display.ino"`.
@@ -28,6 +52,6 @@ go build -o bao .
 ./bao --version
 ```
 
-To run `bao` from anywhere, add the build directory to PATH or create a symlink to the binary from a directory on PATH. Zed task configuration is in `zed-task.json`.
+Run `./install.sh` to rebuild and install the local checkout. Zed task configuration is in `zed-task.json`.
 
 `main.go` handles Bubble Tea events, `view.go` renders the terminal UI, and `setup.go` drives the setup wizard. `preferences.go` stores workspace and sketch selections. `arduino.go` runs Arduino CLI.
